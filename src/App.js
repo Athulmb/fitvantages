@@ -1,47 +1,55 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Layout from "./Layout";
 import Home from "./pages/Home";
 import Blog from "./pages/Blog"; // Import Blog page
 import AboutPage from "./pages/About";
+import Footer from "./components/Footer"; // Import Footer component
+import Services from "./pages/Service";
+import Contact from "./pages/Contact";
+import Navbar from "./components/Navbar"; // Import Footer component
+
+
 
 const App = () => {
   return (
     <Router>
+      <Navbar />
       <Routes>
+        {/* <Route path="/login" element={<Login />} /> */}
         <Route
           path="/"
           element={
-            <Layout>
-              <Home />
-            </Layout>
+            <Home />
           }
         />
-
         <Route
           path="/blog"
           element={
-            <Layout>
-              <Blog />
-            </Layout>
+            <Blog />
+          }
+        />
+        <Route
+          path="/services"
+          element={
+            <Services />
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <Contact />
           }
         />
          <Route
           path="/about"
           element={
-            <Layout>
-              <AboutPage />
-            </Layout>
+            <AboutPage />
           }
         />
-
-
       </Routes>
-
-
+      <Footer />
     </Router>
   );
-};
-
+}
 export default App;

@@ -26,9 +26,9 @@ const FitNavbar = () => {
   const navLinks = [
     { name: "Home", link: "/" },
     { name: "About Us", link: "about" },
-    { name: "Our Services", link: "#services" },
+    { name: "Our Services", link: "services" },
     { name: "Blog", link: "blog" },
-    { name: "Contact Us", link: "#contact" },
+    { name: "Contact Us", link: "contact" },
   ];
 
   return (
