@@ -13,29 +13,32 @@ const sports = [
 const SportsCard = ({ sport, onClick }) => {
   return (
     <div 
-      className="flex-shrink-0 relative w-full max-w-[260px] sm:max-w-[280px] md:max-w-[300px] lg:max-w-[320px] h-[360px] bg-white/5 rounded-3xl overflow-hidden backdrop-blur-md border border-white/10 shadow-xl flex flex-col items-center pt-20 pb-4 cursor-pointer transition-all duration-300 ease-in-out hover:scale-105  snap-start"
+      className="flex-shrink-0 relative w-[260px] sm:w-[280px] md:w-[300px] lg:w-[320px] h-[360px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-3xl snap-start border border-gray-700"
       onClick={onClick}
     >
-      {/* Background Title */}
-      <div className="absolute inset-0 flex items-center justify-center z-0">
-        <h1 className="text-4xl sm:text-5xl font-extrabold uppercase text-white opacity-20 tracking-wider drop-shadow-[0_0_6px_rgba(255,255,255,0.3)]">
+      {/* Background Overlay Text */}
+      <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase text-white/10 tracking-wider transform rotate-0 select-none">
           {sport.title}
         </h1>
       </div>
       
-      {/* Top Image */}
-      <div className="absolute -top-10 z-10">
-        <img
-          src={sport.image}
-          alt={sport.title}
-          className="w-28 h-28 object-contain"
-        />
+      {/* Bottom Title Section - Clean without background */}
+      <div className="absolute bottom-0 left-0 right-0 z-30 p-6">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white text-left tracking-wide">
+          {sport.title}
+        </h2>
       </div>
       
-      {/* Footer Text */}
-      <div className="relative z-20 mt-auto w-full bg-transparent backdrop-blur-md p-4 rounded-b-3xl text-center">
-        <h2 className="text-lg font-bold">{sport.title}</h2>
-      </div>
+      {/* Main Sport Image - Center top with increased size and moved upward to cross border */}
+      <img
+        src={sport.image}
+        alt={sport.title}
+        className="absolute -top-16 sm:-top-20 md:-top-24 lg:-top-28 left-1/2 transform -translate-x-1/2 h-[320px] sm:h-[340px] md:h-[360px] lg:h-[380px] object-contain pointer-events-none z-20 drop-shadow-2xl"
+      />
+      
+      {/* Hover Effect Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 z-40"></div>
     </div>
   );
 };
@@ -69,37 +72,64 @@ const SportsFormat = () => {
   };
 
   return (
-    <section className="w-full py-20 bg-black text-white text-center">
-      <div className="relative px-4 sm:px-10 lg:px-20 py-10">
+    <section className="w-full py-12 sm:py-16 md:py-20 bg-black text-white">
+      <div className="relative px-4 sm:px-6 md:px-10 lg:px-20">
         {/* Heading */}
-        <h2 className="text-3xl sm:text-4xl font-bold mb-12 italic text-center">
-          Explore <span className="text-green-400 not-italic">Sports Format</span>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 sm:mb-12 md:mb-16 text-center">
+          Explore <span className="text-green-400 italic">Sports Format</span>
         </h2>
-
-       
-
+        
+        {/* Navigation Buttons - Hidden on mobile */}
+        <button
+          onClick={scrollLeft}
+          className="hidden lg:flex absolute left-4 top-1/2 transform -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/20"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft className="w-6 h-6 text-white" />
+        </button>
+        
+        <button
+          onClick={scrollRight}
+          className="hidden lg:flex absolute right-4 top-1/2 transform -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/20"
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="w-6 h-6 text-white" />
+        </button>
+        
         {/* Sports Scroll Area */}
         <div
           ref={scrollRef}
-          className="w-full overflow-x-auto scroll-smooth snap-x snap-mandatory"
-          style={{ 
+          className="w-full overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide"
+          style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none"
           }}
         >
           <style jsx>{`
-            div::-webkit-scrollbar {
+            .scrollbar-hide::-webkit-scrollbar {
               display: none;
             }
           `}</style>
           
-          <div className="inline-flex space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10 w-max pb-4 px-4">
+          <div className="inline-flex space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10 w-max pb-4 px-2 sm:px-4">
             {sports.map((sport) => (
               <SportsCard
                 key={sport.id}
                 sport={sport}
                 onClick={() => handleSportClick(sport)}
               />
+            ))}
+          </div>
+        </div>
+        
+        {/* Mobile scroll indicator */}
+        <div className="flex justify-center mt-6 lg:hidden">
+          <div className="flex space-x-2">
+            {sports.slice(0, 3).map((_, index) => (
+              <div
+                key={index}
+                className="w-2 h-2 bg-white/30 rounded-full"
+              ></div>
             ))}
           </div>
         </div>

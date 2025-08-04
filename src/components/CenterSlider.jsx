@@ -32,9 +32,13 @@ const CenterSlider = () => {
     const swiperRef = useRef(null);
 
     return (
-        <section className="w-full py-20 bg-black text-white text-center font-lufga">
-            <h2 className="text-4xl font-bold mb-12">
-                Centers near you <span className="underline underline-offset-4">Dubai ▼</span>
+        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-20 bg-black text-white text-center font-lufga">
+            {/* Responsive heading */}
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 md:mb-10 lg:mb-12 px-4">
+                Centers near you{" "}
+                <span className="underline underline-offset-2 sm:underline-offset-4">
+                    Dubai ▼
+                </span>
             </h2>
 
             <Swiper
@@ -43,11 +47,11 @@ const CenterSlider = () => {
                 grabCursor={true}
                 centeredSlides={true}
                 loop={true}
-                spaceBetween={30}
+                spaceBetween={20}
                 slidesPerView={1}
                 speed={600}
                 allowTouchMove={true}
-                threshold={50}
+                threshold={30}
                 longSwipes={false}
                 shortSwipes={true}
                 coverflowEffect={{
@@ -62,34 +66,65 @@ const CenterSlider = () => {
                     clickable: true,
                 }}
                 breakpoints={{
-                    0: {
+                    // Mobile (320px+)
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 15,
+                        effect: "slide",
+                        centeredSlides: true,
+                    },
+                    // Small mobile (375px+)
+                    375: {
                         slidesPerView: 1,
                         spaceBetween: 20,
                         effect: "slide",
+                        centeredSlides: true,
                     },
+                    // Large mobile (480px+)
                     480: {
                         slidesPerView: 1,
                         spaceBetween: 20,
                         effect: "slide",
+                        centeredSlides: true,
                     },
+                    // Small tablet (640px+)
                     640: {
-                        slidesPerView: 1,
+                        slidesPerView: 1.2,
                         spaceBetween: 25,
                         effect: "slide",
+                        centeredSlides: true,
                     },
+                    // Medium tablet (768px+)
                     768: {
-                        slidesPerView: 1,
+                        slidesPerView: 1.5,
                         spaceBetween: 30,
                         effect: "slide",
+                        centeredSlides: true,
                     },
+                    // Large tablet (1024px+)
                     1024: {
-                        slidesPerView: 3,
+                        slidesPerView: 2.5,
                         spaceBetween: 30,
                         effect: "coverflow",
+                        centeredSlides: true,
+                    },
+                    // Desktop (1280px+)
+                    1280: {
+                        slidesPerView: 3,
+                        spaceBetween: 40,
+                        effect: "coverflow",
+                        centeredSlides: true,
+                    },
+                    // Large desktop (1536px+)
+                    1536: {
+                        slidesPerView: 3,
+                        spaceBetween: 50,
+                        effect: "coverflow",
+                        centeredSlides: true,
                     },
                 }}
                 modules={[EffectCoverflow, Pagination]}
-                className="w-full max-w-6xl px-4 sm:px-6"
+                className="w-full max-w-7xl px-2 sm:px-4 md:px-6 lg:px-8"
                 onSwiper={(swiper) => {
                     swiperRef.current = swiper;
                 }}
@@ -98,44 +133,58 @@ const CenterSlider = () => {
                     <SwiperSlide key={index} className="flex justify-center">
                         <div
                             className={`relative 
-                                w-[280px]         // mobile width
-                                sm:w-[320px]      // small screens
-                                md:w-[340px]      // medium screens
-                                lg:w-[380px]      // large screens
-                                xl:w-[400px]      // extra large screens
-                                h-[480px]         // slightly reduced height for mobile
-                                sm:h-[500px]      // original height for larger screens
-                                rounded-xl overflow-hidden 
+                                w-[260px]         // small mobile
+                                xs:w-[280px]      // mobile 375px+
+                                sm:w-[300px]      // small screens 640px+
+                                md:w-[320px]      // medium screens 768px+
+                                lg:w-[360px]      // large screens 1024px+
+                                xl:w-[380px]      // extra large screens 1280px+
+                                2xl:w-[400px]     // 2xl screens 1536px+
+                                h-[420px]         // small mobile height
+                                xs:h-[440px]      // mobile 375px+ height
+                                sm:h-[460px]      // small screens height
+                                md:h-[480px]      // medium screens height
+                                lg:h-[500px]      // large screens height
+                                xl:h-[520px]      // extra large screens height
+                                rounded-lg sm:rounded-xl 
+                                overflow-hidden 
                                 bg-white/10
                                 backdrop-blur-lg
                                 border border-white/20
-                                shadow-2xl
+                                shadow-xl sm:shadow-2xl
                                 transition-all duration-300 ease-in-out 
                                 flex flex-col
                                 mx-auto
-                                before:absolute before:inset-0 before:bg-white/5 before:rounded-xl`}
+                                 hover:shadow-3xl
+                                before:absolute before:inset-0 before:bg-white/5 before:rounded-lg sm:before:rounded-xl`}
                         >
                             {/* Top (Image/Label) */}
                             <div className="flex-1 relative z-10">
-                                <div className="absolute top-4 left-4 z-20">
-                                    <span className="bg-black/40 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium border border-white/20">
+                                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20">
+                                    <span className="bg-black/40 backdrop-blur-sm text-white text-xs px-2 py-1 sm:px-3 sm:py-1 rounded-full font-medium border border-white/20">
                                         DAILY CLASSES
                                     </span>
                                 </div>
-                                {/* Optional image with glassmorphism overlay */}
+                                {/* Image with glassmorphism overlay */}
                                 <div className="w-full h-full relative">
-                                    <img src="/Rectangle 40.png" alt="Center" className="w-full h-full object-cover opacity-80" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                                    <img 
+                                        src="/Rectangle 40.png" 
+                                        alt="Center" 
+                                        className="w-full h-full object-cover opacity-80" 
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
                                 </div>
                             </div>
 
                             {/* Bottom fixed content + BOOK NOW */}
                             <div className="shrink-0 z-10">
-                                <div className="h-[140px] px-4 sm:px-6 py-4 sm:py-6 bg-black/30 backdrop-blur-xl border-t border-white/20 text-left">
-                                    <h3 className="text-base sm:text-lg font-bold text-white drop-shadow-lg">{center.title}</h3>
-                                    <p className="text-xs sm:text-sm text-white/90 mt-2 flex items-center gap-1 drop-shadow-sm">
+                                <div className="h-[120px] sm:h-[130px] md:h-[140px] px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6 bg-black/30 backdrop-blur-xl border-t border-white/20 text-left">
+                                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-white drop-shadow-lg leading-tight">
+                                        {center.title}
+                                    </h3>
+                                    <p className="text-xs sm:text-sm text-white/90 mt-1 sm:mt-2 flex items-center gap-1 drop-shadow-sm">
                                         <svg
-                                            className="w-3 h-3 sm:w-4 sm:h-4 text-white/80"
+                                            className="w-3 h-3 sm:w-4 sm:h-4 text-white/80 flex-shrink-0"
                                             fill="currentColor"
                                             viewBox="0 0 20 20"
                                         >
@@ -145,22 +194,56 @@ const CenterSlider = () => {
                                                 clipRule="evenodd"
                                             />
                                         </svg>
-                                        {center.location}
+                                        <span className="truncate">{center.location}</span>
                                     </p>
                                 </div>
-                                <div
-                                    className="h-[48px] sm:h-[52px] backdrop-blur-xl border-t border-white/20 text-white text-xs sm:text-sm font-medium flex items-center justify-center rounded-b-xl cursor-pointer hover:bg-white/20 transition-all duration-200 bg-white/10"
+                                <button
+                                    className="w-full h-[44px] sm:h-[48px] md:h-[52px] backdrop-blur-xl border-t border-white/20 text-white text-xs sm:text-sm font-medium flex items-center justify-center rounded-b-lg sm:rounded-b-xl cursor-pointer hover:bg-white/20 active:bg-white/30 transition-all duration-200 bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                                    onClick={() => console.log(`Booking ${center.title}`)}
                                 >
                                     BOOK NOW
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
 
-            {/* Pagination */}
-            <div className="swiper-custom-pagination mt-8 sm:mt-10 flex justify-center gap-2"></div>
+            {/* Custom Pagination with responsive styling */}
+            <div className="swiper-custom-pagination mt-6 sm:mt-8 md:mt-10 flex justify-center gap-1 sm:gap-2 px-4">
+                <style jsx>{`
+                    .swiper-custom-pagination .swiper-pagination-bullet {
+                        width: 8px !important;
+                        height: 8px !important;
+                        background: rgba(255, 255, 255, 0.3) !important;
+                        opacity: 1 !important;
+                        transition: all 0.3s ease !important;
+                        border-radius: 50% !important;
+                        margin: 0 4px !important;
+                    }
+                    
+                    .swiper-custom-pagination .swiper-pagination-bullet-active {
+                        background: white !important;
+                        transform: scale(1.2) !important;
+                    }
+                    
+                    @media (min-width: 640px) {
+                        .swiper-custom-pagination .swiper-pagination-bullet {
+                            width: 10px !important;
+                            height: 10px !important;
+                            margin: 0 6px !important;
+                        }
+                    }
+                    
+                    @media (min-width: 1024px) {
+                        .swiper-custom-pagination .swiper-pagination-bullet {
+                            width: 12px !important;
+                            height: 12px !important;
+                            margin: 0 8px !important;
+                        }
+                    }
+                `}</style>
+            </div>
         </section>
     );
 };
