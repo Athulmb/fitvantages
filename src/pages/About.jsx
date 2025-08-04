@@ -41,6 +41,8 @@ const AboutPage = () => {
                 <div>
                     <p className="text-sm text-gray-300 mb-4">
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </p><p className="text-sm text-gray-300 mb-4">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                     </p>
                     <p className="text-sm text-gray-300">
                         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
