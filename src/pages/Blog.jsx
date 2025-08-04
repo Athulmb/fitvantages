@@ -57,12 +57,12 @@ const Blog = () => {
       <div className="relative z-10">
         <HeroSection />
         <BlogSlider />
-        <NewsLetter/>
+        <NewsLetter />
 
 
-<Subscription />
-        <TrendingTopics />        
-            </div>
+        <Subscription />
+        <TrendingTopics />
+      </div>
 
       {/* Custom CSS for animations */}
       <style jsx>{`

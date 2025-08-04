@@ -3,35 +3,46 @@ import React from "react";
 const AboutPage = () => {
     return (
         <div className="bg-black text-white">
-    <section className="relative w-full overflow-hidden">
-        {/* Background Image */}
-        <img
-            src="/AboutBG.png"
-            alt="Background"
-            className="w-full h-auto object-cover"
-        />
+            <section className="relative w-full overflow-hidden">
+  {/* Background Image */}
+  <img
+    src="/AboutBG.png"
+    alt="Background"
+    className="w-full h-auto object-cover"
+  />
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-30 z-10"></div>
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black bg-opacity-30 z-10"></div>
 
-        {/* Content */}
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 pt-40">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-white">
-                All-In-One Solution To <br />
-                <span className="text-green-400">Empower Fitness</span> <br />
-                <span className="text-green-400">Enthusiasts And Professionals</span>
-            </h1>
+  {/* QR Image Absolute */}
+  <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-30 bg-[#2e2e2e] p-4 rounded-lg text-center">
+  <p className="text-xs text-white mb-8">You can Explore the Gym</p>
+  <img
+    src="/AboutQR.png"
+    alt="QR Code"
+    className="w-24 mx-auto"
+  />
+</div>
 
-            <p className="text-gray-300 mt-6 text-sm sm:text-base max-w-2xl mx-auto">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-            </p>
 
-            <button className="mt-8 px-6 py-3 bg-green-400 text-black font-medium rounded-full hover:bg-lime-300 transition duration-300">
-                Install The App
-            </button>
-        </div>
-    </section>
+  {/* Hero Content */}
+  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 pt-40">
+    <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.2] text-white">
+      All-In-One Solution To <span className="text-green-400">Empower Fitness</span><br />
+      <span className="text-green-400">Enthusiasts And Professionals</span>
+    </h1>
+
+    <p className="text-gray-300 mt-6 text-sm sm:text-base max-w-2xl mx-auto">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+    </p>
+
+    <button className="mt-8 px-6 py-3 bg-green-400 text-black font-medium rounded-full hover:bg-lime-300 transition duration-300">
+      Install The App
+    </button>
+  </div>
+</section>
+
 
 
 
