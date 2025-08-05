@@ -24,6 +24,7 @@ module.exports = {
         third: 'moveInCircle 40s linear infinite',
         fourth: 'moveHorizontal 40s ease infinite',
         fifth: 'moveInCircle 20s ease infinite',
+        spinSlow: 'spinSlow 4s linear infinite',
       },
       keyframes: {
         scroll: {
@@ -45,6 +46,10 @@ module.exports = {
           '0%': { transform: 'translateY(-50%)' },
           '50%': { transform: 'translateY(50%)' },
           '100%': { transform: 'translateY(-50%)' },
+        },
+        spinSlow: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
         },
       },
     },

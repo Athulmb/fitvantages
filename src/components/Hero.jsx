@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+
 
 const FreeTrialModal = ({ isOpen, onClose }) => {
   const sessions = [
@@ -25,7 +27,7 @@ const FreeTrialModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
       <div className="bg-[#1E1E1E] w-full max-w-lg rounded-xl p-8 text-white relative">
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
         >
@@ -63,6 +65,8 @@ const HeroSection = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -118,15 +122,19 @@ const HeroSection = () => {
 
           {/* Bottom Center Buttons */}
           <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-4 sm:gap-6 px-2">
-            <button 
+            <button
               onClick={openModal}
               className="bg-green-400 text-black font-semibold text-sm sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-md hover:bg-green-500 transition-all"
             >
               Get the Free Plan
             </button>
-            <button className="text-green-300 font-semibold text-sm sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-green-500 hover:text-black transition-all">
-              Explore Now
+            <button 
+            onClick={() => navigate("/elitecare")}
+            className="text-green-300 font-semibold text-sm sm:text-lg px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-green-400 transition-all duration-300 hover:bg-white/10 hover:backdrop-blur-md hover:border-white/30 hover:shadow-[0_0_12px_rgba(255,255,255,0.2)]">
+              Fitvantage Elite Care
             </button>
+
+
           </div>
 
           {/* Bottom Right Trainers */}
