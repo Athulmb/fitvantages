@@ -10,6 +10,7 @@ import FitnessSignup from "./components/Auth/Signup";
 import Layout from "./Layout";
 import EliteCare from "./pages/EliteCare";
 import FitnessLogin from "./components/Auth/Login";
+import Flex from "./pages/Flex";
 
 const App = () => {
   return (
@@ -25,6 +26,8 @@ const App = () => {
           <Route path="/signin" element={<FitnessLogin/>} />
 
           <Route path="/elitecare" element={<EliteCare/>} />
+          <Route path="/flex" element={<Flex/>} />
+
 
         </Routes>
       </Layout>

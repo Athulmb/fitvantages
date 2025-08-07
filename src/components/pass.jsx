@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function FitvantagePass() {
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const navigate = useNavigate();
 
   const passes = [
     {
@@ -61,13 +62,15 @@ export default function FitvantagePass() {
                   TRY FOR FREE
                 </button>
                 <button
-                  className="bg-green-500 text-black px-6 py-2 rounded-md text-sm font-semibold"
-                  onClick={() =>
-                    setExpandedIndex(isExpanded ? null : index)
-                  }
-                >
-                  {isExpanded ? "SHRINK" : "LEARN MORE"}
-                </button>
+  className="bg-green-500 text-black px-6 py-2 rounded-md text-sm font-semibold"
+  onClick={() => {
+    setExpandedIndex(isExpanded ? null : index);
+    navigate("/flex");
+  }}
+>
+  {isExpanded ? "SHRINK" : "LEARN MORE"}
+</button>
+
               </div>
             </div>
           );
