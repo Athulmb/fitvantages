@@ -34,9 +34,9 @@ export default function FitnessSignup() {
                     }}
                 />
                 {/* Gradient overlay for blending with black background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/40 to-black/90" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/10 to-black/30" />
                 {/* Right edge blur for seamless transition */}
-                <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-black via-black/60 to-transparent" />
+                <div className="absolute right-0 top-0 w-8 h-full bg-gradient-to-l from-black via-black/60 to-transparent" />
             </div>
 
             {/* Right side - Form */}
