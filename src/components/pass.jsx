@@ -65,12 +65,16 @@ export default function FitvantagePass() {
   className="bg-green-500 text-black px-6 py-2 rounded-md text-sm font-semibold"
   onClick={() => {
     setExpandedIndex(isExpanded ? null : index);
-    navigate("/flex#flex-hero");
+    if (pass.title === "FLEX") {
+      navigate("/flex#flex-hero");
+    } else if (pass.title === "PLAY") {
+      navigate("/play#play-hero");
+    }
   }}
-  
 >
   {isExpanded ? "SHRINK" : "LEARN MORE"}
 </button>
+
 
               </div>
             </div>
