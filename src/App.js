@@ -12,6 +12,7 @@ import EliteCare from "./pages/EliteCare";
 import FitnessLogin from "./components/Auth/Login";
 import Flex from "./pages/Flex";
 import Play from "./pages/Play";
+import PackDetails from "./components/PackDetails";
 
 const App = () => {
   return (
@@ -29,6 +30,8 @@ const App = () => {
           <Route path="/elitecare" element={<EliteCare/>} />
           <Route path="/flex" element={<Flex/>} />
           <Route path="/play" element={<Play/>} />
+          <Route path="/packdetails" element={<PackDetails/>} />
+
 
 
 
