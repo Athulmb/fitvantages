@@ -13,6 +13,8 @@ import FitnessLogin from "./components/Auth/Login";
 import Flex from "./pages/Flex";
 import Play from "./pages/Play";
 import PackDetails from "./components/PackDetails";
+import FitvantageBusiness from "./pages/Bussiness";
+import VantagePass from "./pages/VantagePass";
 
 const App = () => {
   return (
@@ -31,6 +33,11 @@ const App = () => {
           <Route path="/flex" element={<Flex/>} />
           <Route path="/play" element={<Play/>} />
           <Route path="/packdetails" element={<PackDetails/>} />
+
+          <Route path="/business" element={<FitvantageBusiness/>} />
+          <Route path="/pass" element={<VantagePass/>} />
+
+
 
 
 
