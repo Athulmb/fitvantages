@@ -16,6 +16,11 @@ import PackDetails from "./components/PackDetails";
 import FitvantageBusiness from "./pages/Bussiness";
 import VantagePass from "./pages/VantagePass";
 
+import Corporates from "./pages/Corporates";
+import BussinessInnerPgae from "./pages/BussinessInnerPgae";
+import FitnessTrainerPage from "./pages/Trainer";
+import FitVantageLanding from "./pages/Pertner";
+
 const App = () => {
   return (
     <Router>
@@ -34,8 +39,15 @@ const App = () => {
           <Route path="/play" element={<Play/>} />
           <Route path="/packdetails" element={<PackDetails/>} />
 
-          <Route path="/business" element={<FitvantageBusiness/>} />
-          <Route path="/pass" element={<VantagePass/>} />
+          <Route path="/business" element={<FitvantageBusiness/>} 
+          />
+          <Route path="/vantage-pass" element={<VantagePass/>} />
+          <Route path="/corporates" element={<Corporates/>} />
+          <Route path="/businessinner" element={<BussinessInnerPgae/>} />
+          <Route path="/trainer" element={<FitnessTrainerPage/>} />
+
+          <Route path="/pertner" element={<FitVantageLanding/>} />
+
 
 
 
