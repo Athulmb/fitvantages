@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
   const location = useLocation();
 
   // Define routes where Navbar and Footer should be hidden
-  const hideLayoutRoutes = ["/signup", "/signin"];
+  const hideLayoutRoutes = ["/register", "/signin"];
   const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
 
   return (
