@@ -1,57 +1,25 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const programs = [
-  {
-    id: 1,
-    title: "Massive Upper body",
-    subtitle: "7 Week · 5x/week",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
-  },
-  {
-    id: 2,
-    title: "Strength & Power",
-    subtitle: "5 Week · 4x/week",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop",
-  },
-  {
-    id: 3,
-    title: "Shredded Physique",
-    subtitle: "6 Week · 6x/week",
-    image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&h=300&fit=crop",
-  },
-  {
-    id: 4,
-    title: "Endurance Boost",
-    subtitle: "4 Week · 3x/week",
-    image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=300&fit=crop",
-  },
-  {
-    id: 5,
-    title: "Fat Burn Express",
-    subtitle: "3 Week · 5x/week",
-    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&h=300&fit=crop",
-  },
-  {
-    id: 6,
-    title: "Core Strength",
-    subtitle: "4 Week · 4x/week",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop",
-  },
-];
+const API = "http://localhost:7000/api/programs";
+const BASE_URL = "http://localhost:7000"; // for images
 
 const ProgramCard = ({ program, onClick }) => {
   return (
-    <div 
-      className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[340px] lg:w-[380px] xl:w-[320px] h-[320px] sm:h-[340px] md:h-[360px] rounded-2xl overflow-hidden bg-[#1a1a1a] shadow-xl relative transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer snap-start"
+    <div
+      className="flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] h-[300px] 
+      rounded-2xl overflow-hidden bg-[#1a1a1a] shadow-xl relative 
+      transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer snap-start"
       onClick={onClick}
     >
-      <img
-        src={program.image}
-        alt={program.title}
-        className="w-full h-[240px] sm:h-[260px] md:h-[280px] object-cover"
-      />
-      <div className="absolute bottom-0 w-full h-24 bg-black/50 backdrop-blur-md px-5 py-3 flex flex-col justify-end">
+      {program.image && (
+        <img
+          src={`${BASE_URL}${program.image}`}
+          alt={program.title}
+          className="w-full h-[220px] object-cover"
+        />
+      )}
+      <div className="absolute bottom-0 w-full h-20 bg-black/50 backdrop-blur-md px-5 py-3 flex flex-col justify-end">
         <h3 className="font-bold text-white text-base sm:text-lg">
           {program.title}
         </h3>
@@ -61,8 +29,27 @@ const ProgramCard = ({ program, onClick }) => {
   );
 };
 
-const HorizontalScrollCarousel = () => {
+const ProgramCarousel = () => {
   const scrollRef = useRef(null);
+  const [programs, setPrograms] = useState([]);
+
+  const fetchPrograms = async () => {
+    try {
+      const res = await fetch(API);
+      const data = await res.json();
+      if (res.ok) {
+        setPrograms(data.programs || data.data); // backend may return programs[] or data[]
+      } else {
+        console.error(data.message || "Failed to fetch programs");
+      }
+    } catch (err) {
+      console.error("Error fetching programs:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPrograms();
+  }, []);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -86,13 +73,13 @@ const HorizontalScrollCarousel = () => {
 
   const handleProgramClick = (program) => {
     console.log("Selected program:", program.title);
-    // Add your navigation logic here
+    // Add navigation or detail modal here
   };
 
   return (
     <section className="w-full py-20 bg-[#0D1310] text-white font-sans">
       <div className="relative px-4 sm:px-10 lg:px-20 py-10">
-        {/* Heading with styled "Programs" text */}
+        {/* Heading */}
         <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
           Our{" "}
           <span className="italic relative inline-block px-1">
@@ -104,31 +91,45 @@ const HorizontalScrollCarousel = () => {
           </span>
         </h1>
 
-        
+        {/* Scroll Arrows */}
+        <button
+          onClick={scrollLeft}
+          className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-green-600 rounded-full z-10 hover:bg-green-700"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={scrollRight}
+          className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-green-600 rounded-full z-10 hover:bg-green-700"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
 
-        {/* Product Scroll Area */}
+        {/* Carousel */}
         <div
           ref={scrollRef}
           className="w-full overflow-x-auto scroll-smooth snap-x snap-mandatory"
-          style={{ 
-            scrollbarWidth: "none",
-            msOverflowStyle: "none"
-          }}
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           <style jsx>{`
             div::-webkit-scrollbar {
               display: none;
             }
           `}</style>
-          
-          <div className="inline-flex space-x-4 sm:space-x-6 w-max pb-4">
-            {programs.map((program) => (
-              <ProgramCard
-                key={program.id}
-                program={program}
-                onClick={() => handleProgramClick(program)}
-              />
-            ))}
+
+          {/* Center cards */}
+          <div className="flex justify-center w-max gap-6 pb-6 px-4">
+            {programs.length > 0 ? (
+              programs.map((program) => (
+                <ProgramCard
+                  key={program._id}
+                  program={program}
+                  onClick={() => handleProgramClick(program)}
+                />
+              ))
+            ) : (
+              <p className="text-gray-400">No programs available.</p>
+            )}
           </div>
         </div>
       </div>
@@ -136,4 +137,4 @@ const HorizontalScrollCarousel = () => {
   );
 };
 
-export default HorizontalScrollCarousel;
+export default ProgramCarousel;

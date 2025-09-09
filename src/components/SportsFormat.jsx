@@ -13,35 +13,40 @@ const sports = [
 const SportsCard = ({ sport, onClick }) => {
   return (
     <div 
-      className="flex-shrink-0 relative w-[260px] sm:w-[280px] md:w-[300px] lg:w-[320px] h-[360px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-3xl snap-start border border-gray-700"
+      className="flex-shrink-0 relative w-[260px] sm:w-[280px] md:w-[300px] lg:w-[320px] h-[360px] 
+      bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl shadow-2xl cursor-pointer 
+      transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-3xl snap-start 
+      border border-gray-700 flex flex-col items-center justify-center overflow-hidden"
       onClick={onClick}
     >
       {/* Background Overlay Text */}
       <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase text-white/10 tracking-wider transform rotate-0 select-none">
-          {sport.title}
-        </h1>
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase text-white/10 tracking-tight select-none">
+  {sport.title}
+</h1>
+
       </div>
       
-      {/* Bottom Title Section - Clean without background */}
+      {/* Main Sport Image - Centered */}
+      <img
+        src={sport.image}
+        alt={sport.title}
+        className="h-[220px] sm:h-[240px] md:h-[260px] lg:h-[280px] object-contain z-20 drop-shadow-2xl"
+      />
+
+      {/* Bottom Title Section */}
       <div className="absolute bottom-0 left-0 right-0 z-30 p-6">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white text-left tracking-wide">
           {sport.title}
         </h2>
       </div>
       
-      {/* Main Sport Image - Center top with increased size and moved upward to cross border */}
-      <img
-        src={sport.image}
-        alt={sport.title}
-        className="absolute -top-16 sm:-top-20 md:-top-24 lg:-top-28 left-1/2 transform -translate-x-1/2 h-[320px] sm:h-[340px] md:h-[360px] lg:h-[380px] object-contain pointer-events-none z-20 drop-shadow-2xl"
-      />
-      
       {/* Hover Effect Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 z-40"></div>
     </div>
   );
 };
+
 
 const SportsFormat = () => {
   const scrollRef = useRef(null);
