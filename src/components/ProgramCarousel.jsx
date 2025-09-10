@@ -7,23 +7,25 @@ const BASE_URL = "http://localhost:7000"; // for images
 const ProgramCard = ({ program, onClick }) => {
   return (
     <div
-      className="flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] h-[300px] 
+      className="flex-shrink-0 
+      w-full sm:w-[280px] md:w-[300px] lg:w-[320px] xl:w-[340px] 
+      h-[280px] sm:h-[300px] md:h-[320px] lg:h-[340px]
       rounded-2xl overflow-hidden bg-[#1a1a1a] shadow-xl relative 
-      transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer snap-start"
+      transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer snap-center"
       onClick={onClick}
     >
       {program.image && (
         <img
           src={`${BASE_URL}${program.image}`}
           alt={program.title}
-          className="w-full h-[220px] object-cover"
+          className="w-full h-[70%] object-cover"
         />
       )}
-      <div className="absolute bottom-0 w-full h-20 bg-black/50 backdrop-blur-md px-5 py-3 flex flex-col justify-end">
-        <h3 className="font-bold text-white text-base sm:text-lg">
+      <div className="absolute bottom-0 w-full h-20 sm:h-24 bg-black/50 backdrop-blur-md px-4 sm:px-5 py-3 flex flex-col justify-end">
+        <h3 className="font-bold text-white text-base md:text-lg truncate">
           {program.title}
         </h3>
-        <p className="text-xs sm:text-sm text-white/80">{program.subtitle}</p>
+        <p className="text-sm text-white/80 truncate">{program.subtitle}</p>
       </div>
     </div>
   );
@@ -32,18 +34,24 @@ const ProgramCard = ({ program, onClick }) => {
 const ProgramCarousel = () => {
   const scrollRef = useRef(null);
   const [programs, setPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const fetchPrograms = async () => {
     try {
+      setLoading(true);
       const res = await fetch(API);
       const data = await res.json();
-      if (res.ok) {
-        setPrograms(data.programs || data.data); // backend may return programs[] or data[]
-      } else {
-        console.error(data.message || "Failed to fetch programs");
-      }
+
+      if (!res.ok) throw new Error(data.message || "Failed to fetch programs");
+
+      setPrograms(data.programs || data.data || []);
+      setError("");
     } catch (err) {
       console.error("Error fetching programs:", err);
+      setError(err.message || "Something went wrong while fetching programs");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,7 +61,7 @@ const ProgramCarousel = () => {
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      const scrollAmount = scrollRef.current.clientWidth * 0.8;
+      const scrollAmount = scrollRef.current.clientWidth * 0.9;
       scrollRef.current.scrollBy({
         left: -scrollAmount,
         behavior: "smooth",
@@ -63,7 +71,7 @@ const ProgramCarousel = () => {
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      const scrollAmount = scrollRef.current.clientWidth * 0.8;
+      const scrollAmount = scrollRef.current.clientWidth * 0.9;
       scrollRef.current.scrollBy({
         left: scrollAmount,
         behavior: "smooth",
@@ -73,14 +81,13 @@ const ProgramCarousel = () => {
 
   const handleProgramClick = (program) => {
     console.log("Selected program:", program.title);
-    // Add navigation or detail modal here
   };
 
   return (
     <section className="w-full py-20 bg-[#0D1310] text-white font-sans">
       <div className="relative px-4 sm:px-10 lg:px-20 py-10">
         {/* Heading */}
-        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-16 text-center">
           Our{" "}
           <span className="italic relative inline-block px-1">
             <span className="relative z-10 px-3 py-1">Programs</span>
@@ -91,47 +98,57 @@ const ProgramCarousel = () => {
           </span>
         </h1>
 
-        {/* Scroll Arrows */}
+        {/* Scroll Arrows (hidden on mobile) */}
         <button
           onClick={scrollLeft}
-          className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-green-600 rounded-full z-10 hover:bg-green-700"
+          className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-green-600 rounded-full z-10 hover:bg-green-700"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={scrollRight}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-green-600 rounded-full z-10 hover:bg-green-700"
+          className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-green-600 rounded-full z-10 hover:bg-green-700"
         >
           <ChevronRight className="w-6 h-6" />
         </button>
 
-        {/* Carousel */}
-        <div
-          ref={scrollRef}
-          className="w-full overflow-x-auto scroll-smooth snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          <style jsx>{`
-            div::-webkit-scrollbar {
-              display: none;
-            }
-          `}</style>
+        {/* Carousel / States */}
+        {loading ? (
+          <div className="flex justify-center items-center h-60">
+            <div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+            <span className="ml-3">Loading programs...</span>
+          </div>
+        ) : error ? (
+          <div className="flex justify-center items-center h-60 text-red-500">
+            {error}
+          </div>
+        ) : programs.length === 0 ? (
+          <div className="flex justify-center items-center h-60 text-gray-400">
+            No programs available.
+          </div>
+        ) : (
+          <div
+            ref={scrollRef}
+            className="w-full flex justify-start overflow-x-auto scroll-smooth snap-x snap-mandatory"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            <style jsx>{`
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
 
-          {/* Center cards */}
-          <div className="flex justify-center w-max gap-6 pb-6 px-4">
-            {programs.length > 0 ? (
-              programs.map((program) => (
+            <div className="flex w-max gap-4 sm:gap-6 pb-6 px-4 sm:px-8">
+              {programs.map((program) => (
                 <ProgramCard
                   key={program._id}
                   program={program}
                   onClick={() => handleProgramClick(program)}
                 />
-              ))
-            ) : (
-              <p className="text-gray-400">No programs available.</p>
-            )}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

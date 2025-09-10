@@ -1,183 +1,117 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState, useEffect } from "react";
 
 const cards = [
   {
     id: 1,
-    name: 'Robin Thomas',
-    title: 'Mister Dubai Champion 2024',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600&fit=crop&crop=face',
-    bg: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=600&fit=crop',
+    name: "Robin Thomas",
+    title: "Mister Dubai Champion 2024",
+    image: "/videos/robin_thumbnail.jpg",
+    bg: "/videos/robin_bg.jpg",
+    videoUrl: "/videos/robin.mp4",
   },
   {
     id: 2,
-    name: 'Sarah Johnson',
-    title: 'Fitness Transformation 2024',
-    image: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&h=600&fit=crop&crop=face',
-    bg: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&h=600&fit=crop',
+    name: "Sarah Johnson",
+    title: "Fitness Transformation 2024",
+    image: "/videos/sarah_thumbnail.jpg",
+    bg: "/videos/sarah_bg.jpg",
+    videoUrl: "/videos/sarah.mp4",
   },
   {
     id: 3,
-    name: 'Mike Chen',
-    title: 'Bodybuilding Champion 2024',
-    image: 'https://images.unsplash.com/photo-1607962837359-5e7e89f86776?w=400&h=600&fit=crop&crop=face',
-    bg: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&h=600&fit=crop',
+    name: "Mike Chen",
+    title: "Bodybuilding Champion 2024",
+    image: "/videos/mike_thumbnail.jpg",
+    bg: "/videos/mike_bg.jpg",
+    videoUrl: "/videos/mike.mp4",
   },
   {
     id: 4,
-    name: 'Emma Wilson',
-    title: 'Weight Loss Success 2024',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=600&fit=crop&crop=face',
-    bg: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop',
+    name: "Emma Wilson",
+    title: "Weight Loss Success 2024",
+    image: "/videos/emma_thumbnail.jpg",
+    bg: "/videos/emma_bg.jpg",
+    videoUrl: "/videos/emma.mp4",
   },
   {
     id: 5,
-    name: 'David Rodriguez',
-    title: 'Strength Training Expert 2024',
-    image: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=400&h=600&fit=crop&crop=face',
-    bg: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&h=600&fit=crop',
+    name: "David Rodriguez",
+    title: "Strength Training Expert 2024",
+    image: "/videos/david_thumbnail.jpg",
+    bg: "/videos/david_bg.jpg",
+    videoUrl: "/videos/david.mp4",
   },
 ];
 
 const UserStoryCarousel = () => {
-  const containerRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [selectedCard, setSelectedCard] = useState(null);
   const totalSlides = cards.length;
 
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => prev === 0 ? totalSlides - 1 : prev - 1);
-  };
-
-  // Get card style based on position relative to current slide
-  const getCardStyle = (index) => {
-    const position = (index - currentSlide + totalSlides) % totalSlides;
-    
-    const baseStyle = {
-      position: 'absolute',
-      top: 0,
-      left: '50%',
-      width: '320px',
-      height: '400px',
-      transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-    };
-
-    switch (position) {
-      case 0: // Center card
-        return {
-          ...baseStyle,
-          transform: 'translateX(-50%) scale(1)',
-          zIndex: 30,
-          filter: 'blur(0px)',
-          opacity: 1,
-        };
-      case 1: // First left card
-        return {
-          ...baseStyle,
-          transform: 'translateX(-170%) scale(0.85)',
-          zIndex: 20,
-          filter: 'blur(2px)',
-          opacity: 0.8,
-        };
-      case 2: // Second left card
-        return {
-          ...baseStyle,
-          transform: 'translateX(-220%) scale(0.75)',
-          zIndex: 15,
-          filter: 'blur(3px)',
-          opacity: 0.6,
-        };
-      case 3: // Second right card
-        return {
-          ...baseStyle,
-          transform: 'translateX(120%) scale(0.75)',
-          zIndex: 15,
-          filter: 'blur(3px)',
-          opacity: 0.6,
-        };
-      case 4: // First right card
-        return {
-          ...baseStyle,
-          transform: 'translateX(70%) scale(0.85)',
-          zIndex: 20,
-          filter: 'blur(2px)',
-          opacity: 0.8,
-        };
-      default: // Hidden cards
-        return {
-          ...baseStyle,
-          transform: 'translateX(-50%) scale(0.5)',
-          zIndex: 5,
-          filter: 'blur(4px)',
-          opacity: 0,
-        };
-    }
-  };
-
-  // Responsive card style adjustments
-  const getResponsiveCardStyle = (index) => {
-    const baseStyle = getCardStyle(index);
-    const position = (index - currentSlide + totalSlides) % totalSlides;
-    
-    // Mobile adjustments
-    if (window.innerWidth <= 768) {
-      baseStyle.width = '280px';
-      baseStyle.height = '350px';
-      
-      if (position === 1) {
-        baseStyle.transform = 'translateX(-150%) scale(0.8)';
-      } else if (position === 2) {
-        baseStyle.transform = 'translateX(-190%) scale(0.7)';
-      } else if (position === 3) {
-        baseStyle.transform = 'translateX(90%) scale(0.7)';
-      } else if (position === 4) {
-        baseStyle.transform = 'translateX(50%) scale(0.8)';
-      }
-    }
-    
-    // Very small mobile - hide side cards
-    if (window.innerWidth <= 480) {
-      if (position === 2 || position === 3) {
-        baseStyle.opacity = 0;
-        baseStyle.transform = 'translateX(-50%) scale(0.5)';
-      }
-    }
-    
-    return baseStyle;
-  };
+  // Slide navigation
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+  const goToSlide = (index) => setCurrentSlide(index);
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
   }, []);
 
-  // Touch handling for mobile
+  // Responsive card style logic
+  const getCardStyle = (index) => {
+    const position = (index - currentSlide + totalSlides) % totalSlides;
+    const baseStyle = {
+      position: "absolute",
+      top: 0,
+      left: "50%",
+      width: "320px",
+      height: "400px",
+      transition: "all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    };
+    switch (position) {
+      case 0: return { ...baseStyle, transform: "translateX(-50%) scale(1)", zIndex: 30, opacity: 1 };
+      case 1: return { ...baseStyle, transform: "translateX(-170%) scale(0.85)", zIndex: 20, opacity: 0.8 };
+      case 2: return { ...baseStyle, transform: "translateX(-220%) scale(0.75)", zIndex: 15, opacity: 0.6 };
+      case 3: return { ...baseStyle, transform: "translateX(120%) scale(0.75)", zIndex: 15, opacity: 0.6 };
+      case 4: return { ...baseStyle, transform: "translateX(70%) scale(0.85)", zIndex: 20, opacity: 0.8 };
+      default: return { ...baseStyle, transform: "translateX(-50%) scale(0.5)", zIndex: 5, opacity: 0 };
+    }
+  };
+
+  const getResponsiveCardStyle = (index) => {
+    const style = getCardStyle(index);
+    const position = (index - currentSlide + totalSlides) % totalSlides;
+
+    // Tablet adjustments
+    if (window.innerWidth <= 768) {
+      style.width = "280px";
+      style.height = "350px";
+      if (position === 1) style.transform = "translateX(-150%) scale(0.8)";
+      if (position === 2) style.transform = "translateX(-190%) scale(0.7)";
+      if (position === 3) style.transform = "translateX(90%) scale(0.7)";
+      if (position === 4) style.transform = "translateX(50%) scale(0.8)";
+    }
+
+    // Mobile adjustments - hide side cards
+    if (window.innerWidth <= 480 && (position === 2 || position === 3)) {
+      style.opacity = 0;
+      style.transform = "translateX(-50%) scale(0.5)";
+    }
+
+    return style;
+  };
+
+  // Touch handling
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
-
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
+  const onTouchStart = (e) => { setTouchEnd(null); setTouchStart(e.targetTouches[0].clientX); };
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) nextSlide();
-    if (isRightSwipe) prevSlide();
+    if (distance > 50) nextSlide();
+    if (distance < -50) prevSlide();
   };
 
   return (
@@ -193,19 +127,18 @@ const UserStoryCarousel = () => {
       </h2>
 
       {/* Carousel Container */}
-      <div 
+      <div
         className="relative w-full flex justify-center items-center"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        <div className="relative" style={{ height: '400px', width: '100%', maxWidth: '800px' }}>
+        <div className="relative" style={{ height: "400px", width: "100%", maxWidth: "800px" }}>
           {cards.map((card, index) => (
-            <div 
-              key={card.id} 
+            <div
+              key={card.id}
               style={getResponsiveCardStyle(index)}
               className="cursor-pointer"
-              onClick={() => goToSlide(index)}
             >
               <div className="relative w-full h-full mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-green-400 via-green-500 to-green-600 shadow-2xl">
                 {/* Background Image */}
@@ -239,7 +172,10 @@ const UserStoryCarousel = () => {
                 />
 
                 {/* Play Button */}
-                <div className="absolute bottom-20 sm:bottom-24 left-[35%] sm:left-[40%] z-20">
+                <div
+                  className="absolute bottom-20 sm:bottom-24 left-[35%] sm:left-[40%] z-20"
+                  onClick={() => setSelectedCard(card)}
+                >
                   <button className="bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full p-2 sm:p-3 transition-all duration-300 hover:scale-110 group">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -269,16 +205,15 @@ const UserStoryCarousel = () => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide 
-                ? 'bg-white scale-125' 
-                : 'bg-white/40 hover:bg-white/60'
-            }`}
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide
+                ? "bg-white scale-125"
+                : "bg-white/40 hover:bg-white/60"
+              }`}
           />
         ))}
       </div>
 
-      {/* Navigation Arrows - Hidden on mobile */}
+      {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
         className="hidden md:flex absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-50 bg-white/20 hover:bg-white/30 rounded-full p-3 text-white transition-all duration-300 hover:scale-110"
@@ -295,6 +230,43 @@ const UserStoryCarousel = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
+
+      {/* Video Modal */}
+      {selectedCard && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] px-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl relative">
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedCard(null)}
+              className="absolute top-3 right-3 bg-black/70 text-white rounded-full p-2 hover:bg-black"
+            >
+              ✕
+            </button>
+
+
+            {/* Video */}
+            <video
+              src={selectedCard.videoUrl}
+              controls
+              autoPlay
+              className="w-full rounded-t-2xl max-h-[80vh]"
+            />
+
+            {/* Name & Title */}
+            <div className="p-4 text-center">
+              <h3 className="text-lg font-bold">{selectedCard.name}</h3>
+              <p className="text-gray-600">{selectedCard.title}</p>
+              <button
+                onClick={() => setSelectedCard(null)}
+                className="absolute top-3 right-3 bg-transparent  text-white font-bold rounded-full p-2 hover:text-red-400 transition"
+              >
+                ✕
+              </button>
+
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

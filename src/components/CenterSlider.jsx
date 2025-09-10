@@ -5,26 +5,32 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
+// Centers data with image included
 const centers = [
     {
         title: "Mass Fitness",
         location: "Jumeirah",
+        image: "/images/center1.png",
     },
     {
         title: "Power Hub",
         location: "Deira",
+        image: "/images/center2.png",
     },
     {
         title: "Flex Zone",
         location: "Marina",
+        image: "/images/center3.png",
     },
     {
         title: "Core Station",
         location: "Al Quoz",
+        image: "/images/center4.png",
     },
     {
         title: "Prime Fit",
         location: "Business Bay",
+        image: "/images/center5.png",
     },
 ];
 
@@ -66,62 +72,14 @@ const CenterSlider = () => {
                     clickable: true,
                 }}
                 breakpoints={{
-                    // Mobile (320px+)
-                    320: {
-                        slidesPerView: 1,
-                        spaceBetween: 15,
-                        effect: "slide",
-                        centeredSlides: true,
-                    },
-                    // Small mobile (375px+)
-                    375: {
-                        slidesPerView: 1,
-                        spaceBetween: 20,
-                        effect: "slide",
-                        centeredSlides: true,
-                    },
-                    // Large mobile (480px+)
-                    480: {
-                        slidesPerView: 1,
-                        spaceBetween: 20,
-                        effect: "slide",
-                        centeredSlides: true,
-                    },
-                    // Small tablet (640px+)
-                    640: {
-                        slidesPerView: 1.2,
-                        spaceBetween: 25,
-                        effect: "slide",
-                        centeredSlides: true,
-                    },
-                    // Medium tablet (768px+)
-                    768: {
-                        slidesPerView: 1.5,
-                        spaceBetween: 30,
-                        effect: "slide",
-                        centeredSlides: true,
-                    },
-                    // Large tablet (1024px+)
-                    1024: {
-                        slidesPerView: 2.5,
-                        spaceBetween: 30,
-                        effect: "coverflow",
-                        centeredSlides: true,
-                    },
-                    // Desktop (1280px+)
-                    1280: {
-                        slidesPerView: 3,
-                        spaceBetween: 40,
-                        effect: "coverflow",
-                        centeredSlides: true,
-                    },
-                    // Large desktop (1536px+)
-                    1536: {
-                        slidesPerView: 3,
-                        spaceBetween: 50,
-                        effect: "coverflow",
-                        centeredSlides: true,
-                    },
+                    320: { slidesPerView: 1, spaceBetween: 15, effect: "slide", centeredSlides: true },
+                    375: { slidesPerView: 1, spaceBetween: 20, effect: "slide", centeredSlides: true },
+                    480: { slidesPerView: 1, spaceBetween: 20, effect: "slide", centeredSlides: true },
+                    640: { slidesPerView: 1.2, spaceBetween: 25, effect: "slide", centeredSlides: true },
+                    768: { slidesPerView: 1.5, spaceBetween: 30, effect: "slide", centeredSlides: true },
+                    1024: { slidesPerView: 2.5, spaceBetween: 30, effect: "coverflow", centeredSlides: true },
+                    1280: { slidesPerView: 3, spaceBetween: 40, effect: "coverflow", centeredSlides: true },
+                    1536: { slidesPerView: 3, spaceBetween: 50, effect: "coverflow", centeredSlides: true },
                 }}
                 modules={[EffectCoverflow, Pagination]}
                 className="w-full max-w-7xl px-2 sm:px-4 md:px-6 lg:px-8"
@@ -133,19 +91,8 @@ const CenterSlider = () => {
                     <SwiperSlide key={index} className="flex justify-center">
                         <div
                             className={`relative 
-                                w-[260px]         // small mobile
-                                xs:w-[280px]      // mobile 375px+
-                                sm:w-[300px]      // small screens 640px+
-                                md:w-[320px]      // medium screens 768px+
-                                lg:w-[360px]      // large screens 1024px+
-                                xl:w-[380px]      // extra large screens 1280px+
-                                2xl:w-[400px]     // 2xl screens 1536px+
-                                h-[420px]         // small mobile height
-                                xs:h-[440px]      // mobile 375px+ height
-                                sm:h-[460px]      // small screens height
-                                md:h-[480px]      // medium screens height
-                                lg:h-[500px]      // large screens height
-                                xl:h-[520px]      // extra large screens height
+                                w-[260px] xs:w-[280px] sm:w-[300px] md:w-[320px] lg:w-[360px] xl:w-[380px] 2xl:w-[400px]
+                                h-[420px] xs:h-[440px] sm:h-[460px] md:h-[480px] lg:h-[500px] xl:h-[520px]
                                 rounded-lg sm:rounded-xl 
                                 overflow-hidden 
                                 bg-white/10
@@ -155,7 +102,7 @@ const CenterSlider = () => {
                                 transition-all duration-300 ease-in-out 
                                 flex flex-col
                                 mx-auto
-                                 hover:shadow-3xl
+                                hover:shadow-3xl
                                 before:absolute before:inset-0 before:bg-white/5 before:rounded-lg sm:before:rounded-xl`}
                         >
                             {/* Top (Image/Label) */}
@@ -165,11 +112,11 @@ const CenterSlider = () => {
                                         DAILY CLASSES
                                     </span>
                                 </div>
-                                {/* Image with glassmorphism overlay */}
+                                {/* Image with overlay */}
                                 <div className="w-full h-full relative">
                                     <img 
-                                        src="/Rectangle 40.png" 
-                                        alt="Center" 
+                                        src={center.image} 
+                                        alt={center.title} 
                                         className="w-full h-full object-cover opacity-80" 
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
@@ -209,7 +156,7 @@ const CenterSlider = () => {
                 ))}
             </Swiper>
 
-            {/* Custom Pagination with responsive styling */}
+            {/* Custom Pagination */}
             <div className="swiper-custom-pagination mt-6 sm:mt-8 md:mt-10 flex justify-center gap-1 sm:gap-2 px-4">
                 <style jsx>{`
                     .swiper-custom-pagination .swiper-pagination-bullet {
