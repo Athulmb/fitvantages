@@ -1,169 +1,186 @@
 import React from "react";
 
 const AboutPage = () => {
-    return (
-        <div className="bg-black text-white">
-            <section className="relative w-full overflow-hidden">
-  {/* Background Image */}
-  <img
-    src="/AboutBG.png"
-    alt="Background"
-    className="w-full h-auto object-cover"
-  />
+  // ✅ Hero Section Data
+  const hero = {
+    bgImage:
+      "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1400&q=80",
+    qr: {
+      text: "You can Explore the Gym",
+      img: "https://api.qrserver.com/v1/create-qr-code/?data=https://fitvantage.app&size=150x150",
+    },
+    title: (
+      <>
+        All-In-One Solution To{" "}
+        <span className="text-green-400">Empower Fitness</span>
+        <br />
+        <span className="text-green-400">Enthusiasts And Professionals</span>
+      </>
+    ),
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+    button: "Install The App",
+  };
 
-  {/* Dark overlay */}
-  <div className="absolute inset-0 bg-black bg-opacity-30 z-10"></div>
+  // ✅ Description Section 1
+  const description1 = [
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    "It has survived not only five centuries, but also the leap into electronic typesetting.",
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    "It has survived not only five centuries, but also the leap into electronic typesetting.",
+  ];
 
-  {/* QR Image Absolute */}
-  <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-30 bg-[#2e2e2e] p-4 rounded-lg text-center">
-  <p className="text-xs text-white mb-8">You can Explore the Gym</p>
-  <img
-    src="/AboutQR.png"
-    alt="QR Code"
-    className="w-24 mx-auto"
-  />
-</div>
+  const description1Images = [
+    "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=500&q=80",
+  ];
 
+  // ✅ Trainer Section
+  const trainerImage =
+    "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1400&q=80";
 
-  {/* Hero Content */}
-  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 pt-40">
-    <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.2] text-white">
-      All-In-One Solution To <span className="text-green-400">Empower Fitness</span><br />
-      <span className="text-green-400">Enthusiasts And Professionals</span>
-    </h1>
+  const trainerText = [
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    "It has survived not only five centuries, but also the leap into electronic typesetting.",
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    "It has survived not only five centuries, but also the leap into electronic typesetting.",
+  ];
 
-    <p className="text-gray-300 mt-6 text-sm sm:text-base max-w-2xl mx-auto">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-    </p>
+  
 
-    <button className="mt-8 px-6 py-3 bg-green-400 text-black font-medium rounded-full hover:bg-lime-300 transition duration-300">
-      Install The App
-    </button>
-  </div>
-</section>
+  // ✅ Live Classes
+  const liveClasses = [
+    {
+      img: "https://images.unsplash.com/photo-1558611848-73f7eb4001ab?auto=format&fit=crop&w=500&q=80",
+      title: "How Regular Physical Activities Help",
+      date: "February 29, 2025",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1612300121295-9d39c4d0c9d5?auto=format&fit=crop&w=500&q=80",
+      title: "How to Lead a Healthy Lifestyle",
+      date: "January 13, 2025",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=500&q=80",
+      title: "Time For Fitness Routines",
+      date: "January 22, 2025",
+    },
+  ];
 
+  return (
+    <div className="bg-black text-white">
+      {/* ================= Hero Section ================= */}
+      <section className="relative w-full overflow-hidden">
+        <img
+          src={hero.bgImage}
+          alt="Background"
+          className="w-full h-auto object-cover"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-30 z-10"></div>
 
-
-
-
-            {/* Description Section 1 */}
-            <section className="px-6 md:px-20 py-12 grid md:grid-cols-2 gap-10 items-center">
-                <div>
-                    <p className="text-sm text-gray-300 mb-4">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p><p className="text-sm text-gray-300 mb-4">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
-                    <p className="text-sm text-gray-300">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                    </p>
-                </div>
-                <div className="flex flex-col items-center gap-4">
-                    <img
-                        src="https://images.unsplash.com/photo-1571019613914-85f342c1d1a7"
-                        alt="Workout 1"
-                        className="rounded-md"
-                    />
-                    <img
-                        src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1"
-                        alt="Workout 2"
-                        className="rounded-md"
-                    />
-                </div>
-            </section>
-
-            {/* QR Section */}
-            <section className="px-6 md:px-20 flex justify-end">
-                <div className="bg-[#121212] p-4 rounded-lg shadow-lg">
-                    <p className="text-xs text-gray-300">You can also explore our app</p>
-                    <img
-                        src="https://api.qrserver.com/v1/create-qr-code/?data=https://fitvantage.app&size=100x100"
-                        alt="QR Code"
-                        className="w-24 mt-2"
-                    />
-                </div>
-            </section>
-
-            {/* Trainer Image Section */}
-            <section className="px-6 md:px-20 py-10">
-                <img
-                    src="https://images.unsplash.com/photo-1594737625785-cdfb0c4e7b19"
-                    alt="Trainer"
-                    className="w-full max-w-xs md:max-w-md mx-auto rounded"
-                />
-            </section>
-
-            {/* Description Section 2 */}
-            <section className="px-6 md:px-20 grid md:grid-cols-2 gap-10 py-10">
-                <div>
-                    <p className="text-sm text-gray-300 mb-4">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
-                    <p className="text-sm text-gray-300">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                    </p>
-                </div>
-                <div>
-                    <p className="text-sm text-gray-300 mb-4">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
-                    <p className="text-sm text-gray-300">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                    </p>
-                </div>
-            </section>
-
-            {/* Live Classes Section */}
-            <section className="px-6 md:px-20 py-12">
-                <h2 className="text-lg font-semibold mb-6">Upcoming Live Classes</h2>
-                <div className="grid md:grid-cols-4 gap-6">
-                    {/* Live Card 1 */}
-                    <div className="bg-[#121212] p-4 rounded-lg">
-                        <img
-                            src="https://images.unsplash.com/photo-1603398938378-8b0d65b4aa7b"
-                            alt="Live Class 1"
-                            className="mb-2 rounded"
-                        />
-                        <p className="text-sm text-gray-300">How Regular Physical Activities Help</p>
-                        <p className="text-xs text-gray-500">February 29, 2025</p>
-                    </div>
-
-                    {/* Live Card 2 */}
-                    <div className="bg-[#121212] p-4 rounded-lg">
-                        <img
-                            src="https://images.unsplash.com/photo-1612300121295-9d39c4d0c9d5"
-                            alt="Live Class 2"
-                            className="mb-2 rounded"
-                        />
-                        <p className="text-sm text-gray-300">How to Lead a Healthy Lifestyle</p>
-                        <p className="text-xs text-gray-500">January 13, 2025</p>
-                    </div>
-
-                    {/* Live Card 3 */}
-                    <div className="bg-[#121212] p-4 rounded-lg">
-                        <img
-                            src="https://images.unsplash.com/photo-1558611848-73f7eb4001ab"
-                            alt="Live Class 3"
-                            className="mb-2 rounded"
-                        />
-                        <p className="text-sm text-gray-300">Time For Fitness Routines</p>
-                        <p className="text-xs text-gray-500">January 22, 2025</p>
-                    </div>
-
-                    {/* Playstore Icon */}
-                    <div className="flex flex-col justify-center items-center">
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png"
-                            alt="Play Store"
-                            className="w-24"
-                        />
-                        <p className="text-xs mt-2 text-gray-400">More</p>
-                    </div>
-                </div>
-            </section>
+        {/* QR Box */}
+        <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-30 bg-[#2e2e2e] p-4 rounded-lg text-center">
+          <p className="text-xs text-white mb-8">{hero.qr.text}</p>
+          <img src={hero.qr.img} alt="QR Code" className="w-24 mx-auto" />
         </div>
-    );
+
+        {/* Hero Content */}
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 pt-40">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.2] text-white">
+            {hero.title}
+          </h1>
+          <p className="text-gray-300 mt-6 text-sm sm:text-base max-w-2xl mx-auto">
+            {hero.description}
+          </p>
+          <button className="mt-8 px-6 py-3 bg-green-400 text-black font-medium rounded-full hover:bg-lime-300 transition duration-300">
+            {hero.button}
+          </button>
+        </div>
+      </section>
+
+      {/* ================= Description Section 1 ================= */}
+      <section className="px-6 md:px-20 py-16 grid md:grid-cols-2 gap-10 items-center">
+        {/* Left Text */}
+        <div className="space-y-4">
+          {description1.map((text, i) => (
+            <p key={i} className="text-sm text-gray-300">
+              {text}
+            </p>
+          ))}
+        </div>
+
+        {/* Right Images */}
+        <div className="relative flex flex-col items-center gap-4">
+          <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-lg relative">
+            <img
+              src={description1Images[0]}
+              alt="Workout 1"
+              className="rounded-md"
+            />
+            {/* Decorative Dotted Circle */}
+            <div className="absolute -top-4 -left-4 w-32 h-32 border-2 border-dashed border-green-400 rounded-full opacity-40"></div>
+          </div>
+          <img
+            src={description1Images[1]}
+            alt="Workout 2"
+            className="rounded-md"
+          />
+        </div>
+      </section>
+
+      {/* ================= Trainer Section (Image Left + Text Right) ================= */}
+      <section className="px-6 md:px-20 py-16 grid md:grid-cols-2 gap-10 items-center">
+        {/* Trainer Image with Glow */}
+        <div className="relative">
+          <div className="absolute -inset-6 bg-green-500 rounded-full blur-3xl opacity-20"></div>
+          <img
+            src={trainerImage}
+            alt="Trainer"
+            className="relative z-10 w-full max-w-xs md:max-w-md mx-auto rounded-lg"
+          />
+        </div>
+
+        {/* Trainer Text */}
+        <div className="space-y-4">
+          {trainerText.map((text, i) => (
+            <p key={i} className="text-sm text-gray-300">
+              {text}
+            </p>
+          ))}
+        </div>
+      </section>
+
+     
+
+      {/* ================= Live Classes ================= */}
+      {/* <section className="px-6 md:px-20 py-12">
+        <h2 className="text-lg font-semibold mb-6">Upcoming Live Classes</h2>
+        <div className="grid md:grid-cols-4 gap-6">
+          {liveClasses.map((cls, i) => (
+            <div key={i} className="bg-[#121212] p-4 rounded-lg">
+              <img src={cls.img} alt={cls.title} className="mb-2 rounded" />
+              <p className="text-sm text-gray-300">{cls.title}</p>
+              <p className="text-xs text-gray-500">{cls.date}</p>
+            </div>
+          ))}
+
+          <div className="flex flex-col justify-center items-center">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+              alt="Play Store"
+              className="w-24"
+            />
+            <p className="text-xs mt-2 text-gray-400">More</p>
+          </div>
+        </div>
+      </section> */}
+      
+    </div>
+  );
 };
 
 export default AboutPage;

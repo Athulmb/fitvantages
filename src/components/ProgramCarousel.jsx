@@ -1,8 +1,8 @@
+// src/components/ProgramCarousel.jsx
+
 import React, { useRef, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-const API = "http://localhost:7000/api/programs";
-const BASE_URL = "http://localhost:7000"; // for images
+import { PROGRAMS_API, BASE_URL } from "../config"; // ✅ import from config
 
 const ProgramCard = ({ program, onClick }) => {
   return (
@@ -16,7 +16,7 @@ const ProgramCard = ({ program, onClick }) => {
     >
       {program.image && (
         <img
-          src={`${BASE_URL}${program.image}`}
+          src={`${BASE_URL}${program.image}`} // ✅ use BASE_URL from config
           alt={program.title}
           className="w-full h-[70%] object-cover"
         />
@@ -40,7 +40,7 @@ const ProgramCarousel = () => {
   const fetchPrograms = async () => {
     try {
       setLoading(true);
-      const res = await fetch(API);
+      const res = await fetch(PROGRAMS_API); // ✅ use PROGRAMS_API from config
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message || "Failed to fetch programs");
@@ -98,7 +98,7 @@ const ProgramCarousel = () => {
           </span>
         </h1>
 
-        {/* Scroll Arrows (hidden on mobile) */}
+        {/* Scroll Arrows */}
         <button
           onClick={scrollLeft}
           className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-green-600 rounded-full z-10 hover:bg-green-700"

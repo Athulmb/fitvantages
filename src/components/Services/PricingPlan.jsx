@@ -41,7 +41,7 @@ const PricingPlan = () => {
   ];
 
   return (
-    <div className="min-h-screen  text-white py-12 px-4 md:px-8">
+    <div className="min-h-screen bg-black text-white py-12 px-4 md:px-8">
       {/* Header */}
       <div className="text-center mb-14">
         <h1 className="text-4xl md:text-5xl font-bold text-white">

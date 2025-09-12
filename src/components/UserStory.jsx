@@ -1,64 +1,58 @@
 import React, { useState, useEffect } from "react";
-
-const cards = [
-  {
-    id: 1,
-    name: "Robin Thomas",
-    title: "Mister Dubai Champion 2024",
-    image: "/videos/robin_thumbnail.jpg",
-    bg: "/videos/robin_bg.jpg",
-    videoUrl: "/videos/robin.mp4",
-  },
-  {
-    id: 2,
-    name: "Sarah Johnson",
-    title: "Fitness Transformation 2024",
-    image: "/videos/sarah_thumbnail.jpg",
-    bg: "/videos/sarah_bg.jpg",
-    videoUrl: "/videos/sarah.mp4",
-  },
-  {
-    id: 3,
-    name: "Mike Chen",
-    title: "Bodybuilding Champion 2024",
-    image: "/videos/mike_thumbnail.jpg",
-    bg: "/videos/mike_bg.jpg",
-    videoUrl: "/videos/mike.mp4",
-  },
-  {
-    id: 4,
-    name: "Emma Wilson",
-    title: "Weight Loss Success 2024",
-    image: "/videos/emma_thumbnail.jpg",
-    bg: "/videos/emma_bg.jpg",
-    videoUrl: "/videos/emma.mp4",
-  },
-  {
-    id: 5,
-    name: "David Rodriguez",
-    title: "Strength Training Expert 2024",
-    image: "/videos/david_thumbnail.jpg",
-    bg: "/videos/david_bg.jpg",
-    videoUrl: "/videos/david.mp4",
-  },
-];
+import { USERSTORY_API, BASE_URL } from "../config";
 
 const UserStoryCarousel = () => {
+  const [stories, setStories] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedCard, setSelectedCard] = useState(null);
-  const totalSlides = cards.length;
+  const [loadedBg, setLoadedBg] = useState({});
+  const [loadedImage, setLoadedImage] = useState({});
+  const [loadedVideo, setLoadedVideo] = useState({});
+
+  const totalSlides = stories.length;
+
+  // Fetch stories from API
+  const fetchStories = async () => {
+    try {
+      const res = await fetch(USERSTORY_API);
+      const data = await res.json();
+      setStories(data.stories || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchStories();
+  }, []);
 
   // Slide navigation
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % totalSlides);
-  const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+  const prevSlide = () =>
+    setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
   const goToSlide = (index) => setCurrentSlide(index);
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [totalSlides]);
 
-  // Responsive card style logic
+  // Touch handling
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > 50) nextSlide();
+    if (distance < -50) prevSlide();
+  };
+
+  // Style per card
   const getCardStyle = (index) => {
     const position = (index - currentSlide + totalSlides) % totalSlides;
     const baseStyle = {
@@ -70,12 +64,18 @@ const UserStoryCarousel = () => {
       transition: "all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     };
     switch (position) {
-      case 0: return { ...baseStyle, transform: "translateX(-50%) scale(1)", zIndex: 30, opacity: 1 };
-      case 1: return { ...baseStyle, transform: "translateX(-170%) scale(0.85)", zIndex: 20, opacity: 0.8 };
-      case 2: return { ...baseStyle, transform: "translateX(-220%) scale(0.75)", zIndex: 15, opacity: 0.6 };
-      case 3: return { ...baseStyle, transform: "translateX(120%) scale(0.75)", zIndex: 15, opacity: 0.6 };
-      case 4: return { ...baseStyle, transform: "translateX(70%) scale(0.85)", zIndex: 20, opacity: 0.8 };
-      default: return { ...baseStyle, transform: "translateX(-50%) scale(0.5)", zIndex: 5, opacity: 0 };
+      case 0:
+        return { ...baseStyle, transform: "translateX(-50%) scale(1)", zIndex: 30, opacity: 1 };
+      case 1:
+        return { ...baseStyle, transform: "translateX(-170%) scale(0.85)", zIndex: 20, opacity: 0.8 };
+      case 2:
+        return { ...baseStyle, transform: "translateX(-220%) scale(0.75)", zIndex: 15, opacity: 0.6 };
+      case 3:
+        return { ...baseStyle, transform: "translateX(120%) scale(0.75)", zIndex: 15, opacity: 0.6 };
+      case 4:
+        return { ...baseStyle, transform: "translateX(70%) scale(0.85)", zIndex: 20, opacity: 0.8 };
+      default:
+        return { ...baseStyle, transform: "translateX(-50%) scale(0.5)", zIndex: 5, opacity: 0 };
     }
   };
 
@@ -83,7 +83,6 @@ const UserStoryCarousel = () => {
     const style = getCardStyle(index);
     const position = (index - currentSlide + totalSlides) % totalSlides;
 
-    // Tablet adjustments
     if (window.innerWidth <= 768) {
       style.width = "280px";
       style.height = "350px";
@@ -93,7 +92,6 @@ const UserStoryCarousel = () => {
       if (position === 4) style.transform = "translateX(50%) scale(0.8)";
     }
 
-    // Mobile adjustments - hide side cards
     if (window.innerWidth <= 480 && (position === 2 || position === 3)) {
       style.opacity = 0;
       style.transform = "translateX(-50%) scale(0.5)";
@@ -102,20 +100,18 @@ const UserStoryCarousel = () => {
     return style;
   };
 
-  // Touch handling
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
-  const onTouchStart = (e) => { setTouchEnd(null); setTouchStart(e.targetTouches[0].clientX); };
-  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    if (distance > 50) nextSlide();
-    if (distance < -50) prevSlide();
-  };
+  // Handlers for image/video loaded
+  const handleBgLoad = (id) => setLoadedBg((prev) => ({ ...prev, [id]: true }));
+  const handleImageLoad = (id) => setLoadedImage((prev) => ({ ...prev, [id]: true }));
+  const handleVideoLoad = (id) => setLoadedVideo((prev) => ({ ...prev, [id]: true }));
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen bg-black px-4 sm:px-8 py-8 md:py-12 overflow-hidden">
+    <div
+      className="relative flex flex-col items-center justify-center min-h-screen bg-black px-4 sm:px-8 py-8 md:py-12 overflow-hidden"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Heading */}
       <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 text-center text-white max-w-4xl">
         User{" "}
@@ -126,50 +122,40 @@ const UserStoryCarousel = () => {
         </span>
       </h2>
 
-      {/* Carousel Container */}
-      <div
-        className="relative w-full flex justify-center items-center"
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-      >
+      {/* Carousel */}
+      <div className="relative w-full flex justify-center items-center">
         <div className="relative" style={{ height: "400px", width: "100%", maxWidth: "800px" }}>
-          {cards.map((card, index) => (
+          {stories.map((card, index) => (
             <div
-              key={card.id}
+              key={card._id}
               style={getResponsiveCardStyle(index)}
               className="cursor-pointer"
             >
               <div className="relative w-full h-full mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-green-400 via-green-500 to-green-600 shadow-2xl">
-                {/* Background Image */}
-                <img
-                  src={card.bg}
-                  alt="Gym Background"
-                  className="absolute inset-0 w-full h-full object-cover opacity-30"
-                  loading="lazy"
-                />
-
-                {/* Overlay Gradient */}
+                {/* BG Image with fade-in */}
+                {card.bg && (
+                  <img
+                    src={`${BASE_URL}${card.bg}`}
+                    alt="BG"
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                      loadedBg[card._id] ? "opacity-30" : "opacity-0"
+                    }`}
+                    onLoad={() => handleBgLoad(card._id)}
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
 
-                {/* Content */}
-                <div className="relative z-10 p-4 sm:p-6">
-                  <div className="border-2 border-white inline-block px-2 sm:px-3 py-2 mb-4 sm:mb-6 text-left text-white bg-white/10 backdrop-blur-sm rounded-lg">
-                    <p className="font-bold text-xs sm:text-sm">MY FITNESS</p>
-                    <p className="font-bold text-xs sm:text-sm">MY</p>
-                    <p className="font-extrabold text-lg sm:text-2xl">
-                      succ<span className="text-white">ESS</span>
-                    </p>
-                  </div>
-                </div>
-
-                {/* User Image */}
-                <img
-                  src={card.image}
-                  alt={card.name}
-                  className="absolute bottom-20 sm:bottom-24 right-3 sm:right-4 w-24 sm:w-32 h-36 sm:h-48 object-cover object-top rounded-lg z-10"
-                  loading="lazy"
-                />
+                {/* Thumbnail Image */}
+                {card.image && (
+                  <img
+                    src={`${BASE_URL}${card.image}`}
+                    alt={card.name}
+                    className={`absolute bottom-20 sm:bottom-24 right-3 sm:right-4 w-24 sm:w-32 h-36 sm:h-48 object-cover object-top rounded-lg z-10 transition-opacity duration-500 ${
+                      loadedImage[card._id] ? "opacity-100" : "opacity-0"
+                    }`}
+                    onLoad={() => handleImageLoad(card._id)}
+                  />
+                )}
 
                 {/* Play Button */}
                 <div
@@ -188,7 +174,7 @@ const UserStoryCarousel = () => {
                   </button>
                 </div>
 
-                {/* User Info Footer */}
+                {/* Info Footer */}
                 <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 bg-white/20 backdrop-blur-md px-3 sm:px-6 py-2 sm:py-3 rounded-xl z-20 text-white max-w-[calc(100%-2rem)]">
                   <p className="font-bold text-sm sm:text-lg truncate">{card.name}</p>
                   <p className="text-xs sm:text-sm opacity-90 truncate">{card.title}</p>
@@ -201,14 +187,13 @@ const UserStoryCarousel = () => {
 
       {/* Navigation Dots */}
       <div className="flex gap-2 mt-8 sm:mt-12 z-50">
-        {cards.map((_, index) => (
+        {stories.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide
-                ? "bg-white scale-125"
-                : "bg-white/40 hover:bg-white/60"
-              }`}
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+              index === currentSlide ? "bg-white scale-125" : "bg-white/40 hover:bg-white/60"
+            }`}
           />
         ))}
       </div>
@@ -235,7 +220,6 @@ const UserStoryCarousel = () => {
       {selectedCard && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] px-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl relative">
-            {/* Close Button */}
             <button
               onClick={() => setSelectedCard(null)}
               className="absolute top-3 right-3 bg-black/70 text-white rounded-full p-2 hover:bg-black"
@@ -243,26 +227,17 @@ const UserStoryCarousel = () => {
               ✕
             </button>
 
-
-            {/* Video */}
             <video
-              src={selectedCard.videoUrl}
+              src={`${BASE_URL}${selectedCard.videoUrl}`}
               controls
               autoPlay
-              className="w-full rounded-t-2xl max-h-[80vh]"
+              className="w-full rounded-t-2xl max-h-[80vh] transition-opacity duration-500"
+              onLoadedData={() => handleVideoLoad(selectedCard._id)}
             />
 
-            {/* Name & Title */}
             <div className="p-4 text-center">
               <h3 className="text-lg font-bold">{selectedCard.name}</h3>
               <p className="text-gray-600">{selectedCard.title}</p>
-              <button
-                onClick={() => setSelectedCard(null)}
-                className="absolute top-3 right-3 bg-transparent  text-white font-bold rounded-full p-2 hover:text-red-400 transition"
-              >
-                ✕
-              </button>
-
             </div>
           </div>
         </div>

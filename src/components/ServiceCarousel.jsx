@@ -1,9 +1,8 @@
+// src/components/ServiceCarousel.jsx
+
 import React, { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-const BASE_API = "http://localhost:7000/api/"; // for API requests
-const BASE_URL = "http://localhost:7000"; // for static images
-const SERVICES_API = `${BASE_API}services`;
+import { SERVICE_API, BASE_URL } from "../config"; // ✅ use config file
 
 const ServiceCard = ({ service, isCenter, onClick }) => {
   return (
@@ -52,7 +51,7 @@ const ServiceCarousel = () => {
   const fetchServices = async () => {
     try {
       setLoading(true);
-      const res = await fetch(SERVICES_API, {
+      const res = await fetch(SERVICE_API, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -5,11 +5,11 @@ import ProgramCarousel from "../components/ProgramCarousel";
 import CenterSlider from "../components/CenterSlider";
 import WorkoutFormat from "../components/WorkoutFormat";
 import SportsFormat from "../components/SportsFormat";
-import PricingCards from "../components/PrisingCards";
 import FitvantagePass from "../components/pass";
 import ReviewSection from "../components/ReviewSection";
 import { User } from "lucide-react";
 import UserStoryCarousel from "../components/UserStory";
+import PricingPlan from "../components/Services/PricingPlan";
 
 const Home = () => {
   return (
@@ -23,7 +23,8 @@ const Home = () => {
        <SportsFormat/> 
        <UserStoryCarousel/>
        <ReviewSection/>
-      <PricingCards/> 
+       
+      <PricingPlan/>
 
     </>
   );
